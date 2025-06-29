@@ -1,12 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const responseRoutes = require('./routes/responses');
 const app = express();
 
-const PORT = 3000;
+const PORT = 4000;
 const mongoURI = 'mongodb+srv://AmoghBabu:AmoghIsAwesome@hair-care-reccomender.at0f6vj.mongodb.net/?retryWrites=true&w=majority&appName=Hair-Care-Reccomender';
 
 app.use(express.json());
+app.use(cors());
 app.use('/api', responseRoutes);
 
 app.get('/', (req, res) => {
