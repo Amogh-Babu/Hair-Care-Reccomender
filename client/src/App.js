@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function App() {
   const [formData, setFormData] = useState({
@@ -8,6 +8,33 @@ function App() {
   });
 
   const [message, setMessage] = useState('');
+  const [responses, setResponses] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [fetchError, setFetchError] = useState(null);
+
+  useEffect(() => {
+    const fetchResponses = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch('http://localhost:4000/api/responses')
+
+        if (!res.ok) {
+          throw new Error('Failed to fetch');
+        }
+
+        const data = await res.json();
+        setResponses(data);
+        setFetchError(null);
+      } catch (err) {
+        setFetchError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchResponses();
+
+  }, []);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -23,7 +50,8 @@ function App() {
 
     try {
       const res = await fetch('http://localhost:4000/api/responses',
-        { method: 'POST',
+        { 
+          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
         }
@@ -40,7 +68,6 @@ function App() {
       setMessage(`Submission Failed: ${error.message}`);
     }
   }
-
 
   return (
     <div style={{ maxWidth: 400, margin: '2rem auto', fontFamily: 'Arial, sans-serif' }}>
@@ -89,6 +116,21 @@ function App() {
       </form>
 
       {message && <p style={{ marginTop: '1rem' }}>{message}</p>}
+
+      <h2>Past Responses</h2>
+
+      {loading && <p>Loading...</p>}
+      {fetchError && <p style={{ color:'red' }}>Error: {fetchError}</p>}
+
+      {!loading && !fetchError && responses.length === 0 && <p>No responses yet.</p>}
+
+      <ul>
+        {responses.map((resp) => (
+          <li key={resp._id}>
+            <strong>{resp.name}</strong> ({resp.age} years old): {resp.feedback}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
