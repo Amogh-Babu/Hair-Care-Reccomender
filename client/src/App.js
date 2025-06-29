@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import StepOne from '.pages/StepOne';
-import StepTwo from '.pages/StepTwo';
-import StepThree from '.pages/StepThree';
+import StepOne from './pages/StepOne';
+import StepTwo from './pages/StepTwo';
+import Summary from './pages/Summary';
 
 
 function App() {
@@ -75,67 +75,12 @@ function App() {
   }
 
   return (
-    <div style={{ maxWidth: 400, margin: '2rem auto', fontFamily: 'Arial, sans-serif' }}>
-      <h2>Questionnaire</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:<br />
-          <input
-            name="name"
-            type="text"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem' }}
-          />
-        </label>
-
-        <label>
-          Age:<br />
-          <input
-            name="age"
-            type="number"
-            min="0"
-            value={formData.age}
-            onChange={handleChange}
-            required
-            style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem' }}
-          />
-        </label>
-
-        <label>
-          Feedback:<br />
-          <textarea
-            name="feedback"
-            rows="4"
-            value={formData.feedback}
-            onChange={handleChange}
-            required
-            style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem' }}
-          />
-        </label>
-
-        <button type="submit" style={{ padding: '0.5rem 1rem' }}>
-          Submit
-        </button>
-      </form>
-
-      {message && <p style={{ marginTop: '1rem' }}>{message}</p>}
-
-      <h2>Past Responses</h2>
-
-      {loading && <p>Loading...</p>}
-      {fetchError && <p style={{ color:'red' }}>Error: {fetchError}</p>}
-
-      {!loading && !fetchError && responses.length === 0 && <p>No responses yet.</p>}
-
-      <ul>
-        {responses.map((resp) => (
-          <li key={resp._id}>
-            <strong>{resp.name}</strong> ({resp.age} years old): {resp.feedback}
-          </li>
-        ))}
-      </ul>
+    <div className='App'>
+      <Routes>
+        <Route path='/' element={<StepOne/>} />
+        <Route path='/step2' element={<StepTwo/>} />
+        <Route path='/summary' element={<Summary/>} />
+      </Routes>
     </div>
   );
 }
