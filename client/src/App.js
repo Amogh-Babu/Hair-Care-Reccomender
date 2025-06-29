@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import StepOne from '.pages/StepOne';
+import StepTwo from '.pages/StepTwo';
+import StepThree from '.pages/StepThree';
+
 
 function App() {
   const [formData, setFormData] = useState({
