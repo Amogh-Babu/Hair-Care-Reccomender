@@ -24,3 +24,11 @@ mongoose.connect(mongoURI)
 app.listen(PORT, () => {
     console.log(`server listening on port ${PORT}`)
 })
+
+//Use ML models / APIs (later, once you’re comfortable)
+
+// Weight inputs, do scoring systems
+
+// Save recommendations history for user
+
+// Let users rate recommendations and improve logic
