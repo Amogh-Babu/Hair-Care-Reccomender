@@ -4,8 +4,10 @@ const cors = require('cors');
 const responseRoutes = require('./routes/responses');
 const app = express();
 
+require('dotenv').config();
+
 const PORT = 4000;
-const mongoURI = 'mongodb+srv://AmoghBabu:AmoghIsAwesome@hair-care-reccomender.at0f6vj.mongodb.net/?retryWrites=true&w=majority&appName=Hair-Care-Reccomender';
+const mongoURI = process.env.MONGODBKEY
 
 app.use(express.json());
 app.use(cors());

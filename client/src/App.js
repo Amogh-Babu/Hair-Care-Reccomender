@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import StepOne from './pages/StepOne';
-import StepTwo from './pages/StepTwo';
-import Summary from './pages/Summary';
+import QuestionnaireWrapper from './components/QuestionnaireWrapper';
 
 
 function App() {
@@ -17,29 +15,24 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(null);
 
-  useEffect(() => {
-    const fetchResponses = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch('http://localhost:4000/api/responses')
+  const fetchResponses = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('http://localhost:4000/api/responses')
 
-        if (!res.ok) {
-          throw new Error('Failed to fetch');
-        }
-
-        const data = await res.json();
-        setResponses(data);
-        setFetchError(null);
-      } catch (err) {
-        setFetchError(err.message);
-      } finally {
-        setLoading(false);
+      if (!res.ok) {
+        throw new Error('Failed to fetch');
       }
-    };
 
-    fetchResponses();
-
-  }, []);
+      const data = await res.json();
+      setResponses(data);
+      setFetchError(null);
+    } catch (err) {
+      setFetchError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -75,13 +68,16 @@ function App() {
   }
 
   return (
-    <div className='App'>
-      <Routes>
-        <Route path='/' element={<StepOne/>} />
-        <Route path='/step2' element={<StepTwo/>} />
-        <Route path='/summary' element={<Summary/>} />
-      </Routes>
-    </div>
+    <QuestionnaireWrapper 
+      formData={formData} 
+      handleChange={handleChange}
+      handleSubmit={handleSubmit}
+      fetchResponses={fetchResponses}
+      loading={loading}
+      responses={responses}
+      fetchError={fetchError}
+      message={message}
+    />
   );
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const StepTwo = () => {
+const StepTwo = ({formData, handleChange}) => {
     const navigate = useNavigate();
 
     const handleNext = () => {
@@ -14,11 +14,15 @@ const StepTwo = () => {
 
     return (
         <div>
-            <h2>Step 2</h2>
+            <h2>Feedback</h2>
+            <label>
+                Feeback:
+                <input type="text" name="feedback" value={formData.feedback} onChange={handleChange} />
+            </label>
+
             <button onClick={handleBack}>Back</button>
             <button onClick={handleNext}>Next</button>
-
-        </div>        
+        </div>           
     );
 }
 
