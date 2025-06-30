@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
     res.send('Up and Running');
 });
 
-mongoose.connect(mongoURI,)
+mongoose.connect(mongoURI)
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.error('Mongo connection error:', err))
 
