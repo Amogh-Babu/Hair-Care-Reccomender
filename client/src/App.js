@@ -5,8 +5,8 @@ import QuestionnaireWrapper from './components/QuestionnaireWrapper';
 
 function App() {
   const [formData, setFormData] = useState({
-    name: '',
-    age: '',
+    hairTypeNum: '',
+    hairTypeAlpha: '',
     feedback: ''
   });
 
@@ -36,6 +36,7 @@ function App() {
 
   function handleChange(e) {
     const { name, value } = e.target;
+    console.log(`Setting form data of ${name} to ${value}`);
     setFormData(prev => (
       {...prev, [name]: value}
     ));
