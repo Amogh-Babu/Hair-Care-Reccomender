@@ -25,3 +25,21 @@
   margin-bottom: 2rem;
   text-align: center;
 }
+
+input[type="range"] {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.button-input-on {
+  background-color: blue;
+  color: white;
+}
+
+.button-input-off {
+
+  background-color: white;
+  color: black;
+
+}
+

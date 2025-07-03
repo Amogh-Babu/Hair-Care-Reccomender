@@ -37,10 +37,18 @@ const HairType = ({formData, handleChange}) => {
                     </label>
                     )}
                 </div>
-                <div>
+                <div className='side-by-side'>
                     <label className='question-labels'>
-                        Age:
-                        <input type="number" name="age" value={formData.age} onChange={handleChange} />
+                        How dense is your hair?
+                          <input type="range" name="density" min="1" max="10" value={formData.density} onChange={handleChange}/>
+                          <span>{formData.density}</span>
+                    </label>
+                </div>
+                <div className='side-by-side'> 
+                    <label className='question-labels'>
+                        How oily is your hair/scalp?
+                          <input type="range" name="oiliness" min="1" max="10" value={formData.oiliness} onChange={handleChange}/>
+                          <span>{formData.oiliness}</span>
                     </label>
                 </div>
             </div>

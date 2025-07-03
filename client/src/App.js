@@ -7,7 +7,9 @@ function App() {
   const [formData, setFormData] = useState({
     hairTypeNum: '',
     hairTypeAlpha: '',
-    feedback: ''
+    density: 1,
+    oiliness: 1,
+    goals: []
   });
 
   const [message, setMessage] = useState('');
@@ -74,6 +76,7 @@ function App() {
       handleChange={handleChange}
       handleSubmit={handleSubmit}
       fetchResponses={fetchResponses}
+      setFormData={setFormData}
       loading={loading}
       responses={responses}
       fetchError={fetchError}
