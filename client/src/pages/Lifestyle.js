@@ -4,7 +4,7 @@ const Lifestyle = ({formData, setFormData}) => {
     const navigate = useNavigate();
 
     const handleNext = () => {
-        navigate('/summary');
+        navigate('/budget');
     }
 
     const handleBack = () => {

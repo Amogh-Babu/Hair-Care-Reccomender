@@ -7,7 +7,8 @@ const HairType = ({formData, handleChange, setFormData}) => {
 
     const handleNext = () => {
         navigate('/lifestyle');
-}
+    }
+
 
     return (
         <div className="form-container">

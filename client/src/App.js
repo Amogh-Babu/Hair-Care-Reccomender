@@ -13,6 +13,8 @@ function App() {
     headcovering: false,
     workout: false,
     heat: false,
+    timeRange: [0, 60],
+    budgRange: [0, 50]
   });
 
   const [message, setMessage] = useState('');
