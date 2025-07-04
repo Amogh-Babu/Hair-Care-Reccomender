@@ -4,12 +4,31 @@ const Response = require('../models/Response')
 
 router.post('/responses', async (req, res) => {
     try {
-        const { name, age, feedback} = req.body;
+        const { hairTypeNum,
+            hairTypeAlpha,
+            density,
+            oiliness,
+            dandruff,
+            goals,
+            headcovering,
+            workout,
+            heat,
+            timeRange,
+            budgRange } = req.body;
+
 
         const newResponse = new Response({
-            name,
-            age,
-            feedback
+            hairTypeNum,
+            hairTypeAlpha,
+            density,
+            oiliness,
+            dandruff,
+            goals,
+            headcovering,
+            workout,
+            heat,
+            timeRange,
+            budgRange
         });
 
         const savedResponse = await newResponse.save();

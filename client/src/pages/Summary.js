@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/summary.css';
 
-const Summary = ({ formData, handleSubmit, fetchResponses, loading, responses, fetchError, message }) => {
+const Summary = ({ formData, handleSubmit }) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
     navigate('/budget');
   };
 
-  useEffect(() => {
-    fetchResponses();
-  }, []);
+  const handleNext = (e) => {
+    handleSubmit(e);
+    navigate('/reccomendation');
+  }
 
   return (
     <div className="summary-container">
@@ -47,26 +47,11 @@ const Summary = ({ formData, handleSubmit, fetchResponses, loading, responses, f
         <p>You’re willing to spend <strong>${formData.budgRange[0]}–${formData.budgRange[1]}</strong> monthly</p>
       </section>
 
-      <section className="summary-section">
-        <h3>Past Responses</h3>
-        {loading && <p>Loading...</p>}
-        {fetchError && <p className="error-msg">Error: {fetchError}</p>}
-        {!loading && !fetchError && responses.length === 0 && <p>No responses yet.</p>}
-        <ul className="responses-list">
-          {responses.map((resp) => (
-            <li key={resp._id}>
-              <strong>{resp.name}</strong> ({resp.age} yrs): {resp.feedback}
-            </li>
-          ))}
-        </ul>
-      </section>
-
       <div className="button-row">
-        <button onClick={handleSubmit}>Submit</button>
+        <button onClick={handleNext}>Submit</button>
         <button onClick={handleBack}>Back</button>
       </div>
 
-      {message && <p className="success-msg">{message}</p>}
     </div>
   );
 };

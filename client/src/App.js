@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import QuestionnaireWrapper from './components/QuestionnaireWrapper';
+import ReccomendationWrapper from './components/reccomendationWrapper';
 
 
 function App() {
@@ -41,6 +43,10 @@ function App() {
     }
   };
 
+  const fetchReccomendation = async () => {
+    
+  };
+
   function handleChange(e) {
     const { name, value } = e.target;
     console.log(`Setting form data of ${name} to ${value}`);
@@ -69,24 +75,39 @@ function App() {
 
       const data = await res.json();
       setMessage('Submission Success!');
-      setFormData({ name: '', age: '', feedback: ''});
+      setFormData({
+        hairTypeNum: '',
+        hairTypeAlpha: '',
+        density: 1,
+        oiliness: 1,
+        dandruff: false,
+        goals: [],
+        headcovering: false,
+        workout: false,
+        heat: false,
+        timeRange: [0, 60],
+        budgRange: [0, 50]
+      });
     } catch (error) {
       setMessage(`Submission Failed: ${error.message}`);
     }
   }
 
   return (
-    <QuestionnaireWrapper 
+    <Routes>
+      <Route path="*" element={<QuestionnaireWrapper 
       formData={formData} 
       handleChange={handleChange}
       handleSubmit={handleSubmit}
-      fetchResponses={fetchResponses}
       setFormData={setFormData}
-      loading={loading}
-      responses={responses}
-      fetchError={fetchError}
-      message={message}
-    />
+      />}/>
+      <Route path="/reccomendation/*" element={<ReccomendationWrapper
+      setLoading={setLoading}
+      loading={loading}/>}/>
+      
+
+    </Routes>
+    
   );
 }
 
