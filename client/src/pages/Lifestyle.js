@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import '../styles/form.css'
 
 const Lifestyle = ({formData, setFormData}) => {
     const navigate = useNavigate();

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
+import '../styles/form.css'
 
 const Lifestyle = ({ formData, setFormData }) => {
   const navigate = useNavigate();

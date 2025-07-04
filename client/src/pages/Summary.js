@@ -1,58 +1,74 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../styles/summary.css';
 
-const Summary = ({formData, handleSubmit, fetchResponses, loading, responses, fetchError, message}) => {
-    const navigate = useNavigate();
+const Summary = ({ formData, handleSubmit, fetchResponses, loading, responses, fetchError, message }) => {
+  const navigate = useNavigate();
 
-    const handleBack = () => {
-        navigate('/step2');
-    }
+  const handleBack = () => {
+    navigate('/budget');
+  };
 
-    useEffect(() => {
-        fetchResponses();
+  useEffect(() => {
+    fetchResponses();
+  }, []);
 
-    }, []);
+  return (
+    <div className="summary-container">
+      <h2 className="section-title">Summary</h2>
 
-    return (
-        <div>
-            <h2>Summary</h2>
+      <section className="summary-section">
+        <h3>Your Goals:</h3>
+        <ul className="summary-list">
+          {formData.goals.map((goal) => {
+            return(<li key={goal}>{goal}</li>)
+          })}
+        </ul>
+      </section>
 
-            <label>
-                Your Name:
-                {formData.name}
-            </label>
+      <section className="summary-section">
+        <h3>Hair Information:</h3>
+        <p>Your Hair Type: <strong>{`${formData.hairTypeNum}${formData.hairTypeNum !== 1 ? formData.hairTypeAlpha : ""}`}</strong></p>
+        <p>Your Hair Density: <strong>{formData.density}</strong></p>
+        <p>Your Hair Oiliness: <strong>{formData.oiliness}</strong></p>
+        <p>You {formData.dandruff ? "do" : "do not"} experience dandruff or scalp itchiness</p>
+      </section>
 
-            <label>
-                Your Age:
-                {formData.age}
-            </label>
+      <section className="summary-section">
+        <h3>Lifestyle Information:</h3>
+        <p>You {formData.headcovering ? "do" : "do not"} wear headcoverings</p>
+        <p>You {formData.workout ? "do" : "do not"} workout/get sweaty often</p>
+        <p>You {formData.heat ? "do" : "do not"} use heat tools on your hair</p>
+      </section>
 
-            <label>
-                Feedback:
-                {formData.feedback}
-            </label>
+      <section className="summary-section">
+        <h3>Time and Budget:</h3>
+        <p>You’re willing to spend <strong>{formData.timeRange[0]}–{formData.timeRange[1]}</strong> minutes weekly</p>
+        <p>You’re willing to spend <strong>${formData.budgRange[0]}–${formData.budgRange[1]}</strong> monthly</p>
+      </section>
 
-            <h2>Past Responses</h2>
+      <section className="summary-section">
+        <h3>Past Responses</h3>
+        {loading && <p>Loading...</p>}
+        {fetchError && <p className="error-msg">Error: {fetchError}</p>}
+        {!loading && !fetchError && responses.length === 0 && <p>No responses yet.</p>}
+        <ul className="responses-list">
+          {responses.map((resp) => (
+            <li key={resp._id}>
+              <strong>{resp.name}</strong> ({resp.age} yrs): {resp.feedback}
+            </li>
+          ))}
+        </ul>
+      </section>
 
-            {loading && <p>Loading...</p>}
-            {fetchError && <p style={{ color:'red' }}>Error: {fetchError}</p>}
-            {!loading && !fetchError && responses.length === 0 && <p>No responses yet.</p>}
+      <div className="button-row">
+        <button onClick={handleSubmit}>Submit</button>
+        <button onClick={handleBack}>Back</button>
+      </div>
 
-            <ul>
-                {responses.map((resp) => (
-                    <li key={resp._id}>
-                        <strong>{resp.name}</strong> ({resp.age} years old): {resp.feedback}
-                    </li>
-                ))}
-            </ul>
-
-            <button onClick={handleSubmit}>Submit</button>
-            <button onClick={handleBack}>Back</button>
-
-            {message && <p>message</p>}
-
-        </div>        
-    );
-}
+      {message && <p className="success-msg">{message}</p>}
+    </div>
+  );
+};
 
 export default Summary;
