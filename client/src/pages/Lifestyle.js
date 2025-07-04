@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Lifestyle = ({formData, setFormData}) => {
@@ -34,6 +33,24 @@ const Lifestyle = ({formData, setFormData}) => {
                         {goalOpts.map((opts) => {
                             return(<button key={opts} className={`button-input-${formData.goals.includes(opts) ? "on" : "off"}`} onClick={() => toggleGoal(opts)}>{opts}</button>)
                         })}
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Do you wear head coverings or hats often?
+                        <input type="checkbox" name="headcovering" checked={formData.headcovering} onChange={(e) => setFormData({ ...formData, headcovering:e.target.checked})}></input>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Do you workout often?
+                        <input type="checkbox" name="workout" checked={formData.workout} onChange={(e) => setFormData({ ...formData, workout:e.target.checked})}></input>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Do you use heat tools?
+                        <input type="checkbox" name="heat" checked={formData.heat} onChange={(e) => setFormData({ ...formData, heat:e.target.checked})}></input>
                     </label>
                 </div>
             </div>

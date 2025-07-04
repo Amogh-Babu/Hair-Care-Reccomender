@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 import QuestionnaireWrapper from './components/QuestionnaireWrapper';
 
 
@@ -9,7 +8,11 @@ function App() {
     hairTypeAlpha: '',
     density: 1,
     oiliness: 1,
-    goals: []
+    dandruff: false,
+    goals: [],
+    headcovering: false,
+    workout: false,
+    heat: false,
   });
 
   const [message, setMessage] = useState('');

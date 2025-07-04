@@ -2,11 +2,11 @@ import React from 'react';
 import '../styles/form.css'
 import { useNavigate } from 'react-router-dom';
 
-const HairType = ({formData, handleChange}) => {
+const HairType = ({formData, handleChange, setFormData}) => {
     const navigate = useNavigate();
 
     const handleNext = () => {
-        navigate('/step2');
+        navigate('/lifestyle');
 }
 
     return (
@@ -49,6 +49,12 @@ const HairType = ({formData, handleChange}) => {
                         How oily is your hair/scalp?
                           <input type="range" name="oiliness" min="1" max="10" value={formData.oiliness} onChange={handleChange}/>
                           <span>{formData.oiliness}</span>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Do you experience dandruff or scalp itchiness?
+                        <input type="checkbox" name="dandruff" checked={formData.dandruff} onChange={(e) => setFormData({ ...formData, dandruff:e.target.checked})}></input>
                     </label>
                 </div>
             </div>
