@@ -21,6 +21,7 @@ function App() {
 
   const [message, setMessage] = useState('');
   const [responses, setResponses] = useState([]);
+  const [recco, setRecco] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(null);
 
@@ -34,7 +35,7 @@ function App() {
       }
 
       const data = await res.json();
-      setResponses(data);
+      setRecco(data);
       setFetchError(null);
     } catch (err) {
       setFetchError(err.message);
@@ -44,7 +45,22 @@ function App() {
   };
 
   const fetchReccomendation = async () => {
-    
+    setLoading(true);
+    try {
+      const res = await fetch('http://localhost:4000/api/reccomendation')
+
+      if (!res.ok) {
+        throw new Error('Failed to fetch');
+      }
+
+      const data = await res.json();
+      setRecco(data);
+      setFetchError(null);
+    } catch (err) {
+      setFetchError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   function handleChange(e) {
@@ -102,8 +118,10 @@ function App() {
       setFormData={setFormData}
       />}/>
       <Route path="/reccomendation/*" element={<ReccomendationWrapper
+      fetchReccomendation={fetchReccomendation}
       setLoading={setLoading}
-      loading={loading}/>}/>
+      loading={loading}
+      recco={recco}/>}/>
       
 
     </Routes>

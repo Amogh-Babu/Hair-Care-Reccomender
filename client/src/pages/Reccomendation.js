@@ -1,12 +1,25 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
-const Reccomendation = ({ setLoading, loading }) => {
+const Reccomendation = ({ fetchReccomendation, loading, recco }) => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchReccomendation();
+    }, []);
 
 
 
     return (
-        <p>Hello</p>       
+        <div>
+            {loading && <p>Loading...</p>}
+            <ul>
+                {recco.map((rec) => {
+                    <li>{rec}</li>
+                })}
+            </ul> 
+        </div>
+      
     );
 }
 

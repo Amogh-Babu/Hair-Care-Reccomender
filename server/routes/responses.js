@@ -49,4 +49,14 @@ router.get('/responses', async (req, res) => {
     }
 })
 
+router.get('/reccomendation', async (req, res) => {
+    try {
+        const reccomendation = ["Hi", "This", "Yay"]
+        res.json(reccomendation);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to fetch reccomendation', details: err})
+    }
+})
+
 module.exports = router;
