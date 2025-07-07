@@ -51,7 +51,17 @@ router.get('/responses', async (req, res) => {
 
 router.get('/reccomendation', async (req, res) => {
     try {
-        const reccomendation = ["Hi", "This", "Yay"]
+        const { hairTypeNum,
+            hairTypeAlpha,
+            density,
+            oiliness,
+            dandruff,
+            goals,
+            headcovering,
+            workout,
+            heat,
+            timeRange,
+            budgRange } = req.body;
         res.json(reccomendation);
     } catch (err) {
         console.error(err);

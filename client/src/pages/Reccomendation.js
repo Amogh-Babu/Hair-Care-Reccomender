@@ -15,7 +15,7 @@ const Reccomendation = ({ fetchReccomendation, loading, recco }) => {
             {loading && <p>Loading...</p>}
             <ul>
                 {recco.map((rec) => {
-                    <li>{rec}</li>
+                    return(<li key={rec}>{rec}</li>)
                 })}
             </ul> 
         </div>
