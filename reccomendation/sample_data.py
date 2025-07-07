@@ -6,7 +6,8 @@ user_input = {
     "dandruff": False,
     "headcovering": True,
     "workout": False,
-    "heat": True
+    "heat": True,
+    "time_range": [16, 50]
 }
 
 all_products = [
