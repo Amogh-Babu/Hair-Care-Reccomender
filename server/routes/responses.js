@@ -49,20 +49,31 @@ router.get('/responses', async (req, res) => {
     }
 })
 
-router.get('/reccomendation', async (req, res) => {
+router.post('/recommendation', async (req, res) => {
     try {
-        const { hairTypeNum,
-            hairTypeAlpha,
-            density,
-            oiliness,
-            dandruff,
-            goals,
-            headcovering,
-            workout,
-            heat,
-            timeRange,
-            budgRange } = req.body;
-        res.json(reccomendation);
+        const userInput = { 
+            hairtype: "" + req.body.hairTypeNum + req.body.hairTypeAlpha,
+            density: req.body.density,
+            oiliness: req.body.oiliness,
+            dandruff: req.body.dandruff,
+            goals: req.body.goals,
+            headcovering: req.body.headcovering,
+            workout: req.body.workout,
+            heat: req.body.heat,
+            time_range: req.body.timeRange,
+            budget_range: req.body.budgRange
+        };
+
+        const recRes = await fetch('http://localhost:8000/recommend', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userInput)
+        });
+
+        const recommendation = await recRes.json();
+        console.log(recommendation)
+        res.json(recommendation)
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Failed to fetch reccomendation', details: err})

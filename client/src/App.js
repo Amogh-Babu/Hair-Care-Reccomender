@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import QuestionnaireWrapper from './components/QuestionnaireWrapper';
-import ReccomendationWrapper from './components/reccomendationWrapper';
+import ReccomendationWrapper from './components/ReccomendationWrapper';
 
 
 function App() {
@@ -47,7 +47,12 @@ function App() {
   const fetchReccomendation = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:4000/api/reccomendation')
+      const res = await fetch('http://localhost:4000/api/recommendation',         
+        { 
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
 
       if (!res.ok) {
         throw new Error('Failed to fetch');
