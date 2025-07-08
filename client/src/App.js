@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+
 import QuestionnaireWrapper from './components/QuestionnaireWrapper';
 import ReccomendationWrapper from './components/ReccomendationWrapper';
 
@@ -21,7 +22,7 @@ function App() {
 
   const [message, setMessage] = useState('');
   const [responses, setResponses] = useState([]);
-  const [recco, setRecco] = useState([]);
+  const [rec, setRec] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(null);
 
@@ -35,7 +36,7 @@ function App() {
       }
 
       const data = await res.json();
-      setRecco(data);
+      setResponses(data);
       setFetchError(null);
     } catch (err) {
       setFetchError(err.message);
@@ -59,12 +60,13 @@ function App() {
       }
 
       const data = await res.json();
-      setRecco(data);
+      setRec(data);
       setFetchError(null);
     } catch (err) {
       setFetchError(err.message);
     } finally {
       setLoading(false);
+      
     }
   };
 
@@ -78,11 +80,11 @@ function App() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+    setLoading(true);
     setMessage('Submitting....');
 
     try {
-      const res = await fetch('http://localhost:4000/api/responses',
+      const res = await fetch('http://localhost:4000/api/submit',
         { 
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -94,7 +96,7 @@ function App() {
         throw new Error(`Server Error: ${res.statusText}`);
       }
 
-      const data = await res.json();
+      const rec = await res.json();
       setMessage('Submission Success!');
       setFormData({
         hairTypeNum: '',
@@ -110,7 +112,10 @@ function App() {
         budgRange: [0, 50]
       });
     } catch (error) {
-      setMessage(`Submission Failed: ${error.message}`);
+      setMessage(`Submission Failed: ${error.message}`)
+    } finally {
+      setLoading(false);
+      setMessage('');
     }
   }
 
@@ -121,12 +126,14 @@ function App() {
       handleChange={handleChange}
       handleSubmit={handleSubmit}
       setFormData={setFormData}
+      loading={loading}
+      message={message}
       />}/>
       <Route path="/reccomendation/*" element={<ReccomendationWrapper
       fetchReccomendation={fetchReccomendation}
       setLoading={setLoading}
       loading={loading}
-      recco={recco}/>}/>
+      rec={rec}/>}/>
       
 
     </Routes>

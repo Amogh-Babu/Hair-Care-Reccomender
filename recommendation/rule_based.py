@@ -110,11 +110,8 @@ def rule_based_recco(user_input, all_products):
             else:
                 low_products[prod_type]["Used"] = False
        
-    # Routines are set and returned    
-    high_routine.setRoutine(high_products)
-    low_routine.setRoutine(low_products)
     
-    return [high_routine, low_routine]
+    return [high_products, low_products]
       
 def main():
     routines = rule_based_recco(user_input, all_products)

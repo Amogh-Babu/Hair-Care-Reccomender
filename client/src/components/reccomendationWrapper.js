@@ -2,12 +2,13 @@ import { Routes, Route } from 'react-router-dom';
 import Reccomendation from '../pages/Reccomendation';
 
 
-const ReccomendationWrapper = ({ fetchReccomendation, loading, recco }) => {
+const ReccomendationWrapper = ({ fetchReccomendation, loading, rec }) => {
 
 
     return (
         <Routes>
-            <Route path="/" element={<Reccomendation fetchReccomendation={fetchReccomendation} loading={loading} recco={recco}/>} />
+            // Loading screen here
+            <Route path="/" element={<Reccomendation fetchReccomendation={fetchReccomendation} loading={loading} rec={rec}/>} />
         </Routes>
     );
 

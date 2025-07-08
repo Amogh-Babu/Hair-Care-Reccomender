@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 const responseSchema = new mongoose.Schema({
-    hairTypeNum: Number,
-    hairTypeAlpha: String,
+    hair_type: String,
     density: Number,
     oiliness: Number,
     dandruff: Boolean,
@@ -10,8 +9,8 @@ const responseSchema = new mongoose.Schema({
     headcovering: Boolean,
     workout: Boolean,
     heat: Boolean,
-    timeRange: [Number],
-    budgRange: [Number]
+    time_range: [Number],
+    budget_range: [Number]
 })
 
 const Response = mongoose.model('Response', responseSchema);

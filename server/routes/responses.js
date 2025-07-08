@@ -2,37 +2,33 @@ const express = require('express');
 const router = express.Router();
 const Response = require('../models/Response')
 
-router.post('/responses', async (req, res) => {
+router.post('/submit', async (req, res) => {
     try {
-        const { hairTypeNum,
-            hairTypeAlpha,
-            density,
-            oiliness,
-            dandruff,
-            goals,
-            headcovering,
-            workout,
-            heat,
-            timeRange,
-            budgRange } = req.body;
+        const userInput = { 
+            hair_type: "" + req.body.hairTypeNum + req.body.hairTypeAlpha, // TODO, account for hair type 1
+            density: Number(req.body.density),
+            oiliness: Number(req.body.oiliness),
+            dandruff: req.body.dandruff,
+            goals: req.body.goals,
+            headcovering: req.body.headcovering,
+            workout: req.body.workout,
+            heat: req.body.heat,
+            time_range: req.body.timeRange,
+            budget_range: req.body.budgRange
+        };
 
+        const newResponse = new Response(userInput);
+        const savedResponse = await newResponse.save();
 
-        const newResponse = new Response({
-            hairTypeNum,
-            hairTypeAlpha,
-            density,
-            oiliness,
-            dandruff,
-            goals,
-            headcovering,
-            workout,
-            heat,
-            timeRange,
-            budgRange
+        const recRes = await fetch('http://localhost:8000/recommend', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userInput)
         });
 
-        const savedResponse = await newResponse.save();
-        res.status(201).json(savedResponse);
+        const recommendation = await recRes.json();
+        console.log("Rec: " + JSON.stringify(recommendation)) // What - come back to here
+        res.json(recommendation)
 
     } catch (err) {
         res.status(500).json({ error: 'Could not save response', details: err});
@@ -71,7 +67,6 @@ router.post('/recommendation', async (req, res) => {
         });
 
         const recommendation = await recRes.json();
-        console.log(recommendation)
         res.json(recommendation)
 
     } catch (err) {

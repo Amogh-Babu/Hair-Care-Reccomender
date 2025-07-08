@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import '../styles/summary.css';
 
-const Summary = ({ formData, handleSubmit }) => {
+const Summary = ({ formData, handleSubmit, loading, message }) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
@@ -50,6 +50,10 @@ const Summary = ({ formData, handleSubmit }) => {
       <div className="button-row">
         <button onClick={handleNext}>Submit</button>
         <button onClick={handleBack}>Back</button>
+      </div>
+
+      <div>
+        {loading && <p>{message}</p>}
       </div>
 
     </div>

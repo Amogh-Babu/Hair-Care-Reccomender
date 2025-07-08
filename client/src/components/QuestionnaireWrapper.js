@@ -4,7 +4,7 @@ import Lifestyle from '../pages/Lifestyle';
 import Budget from '../pages/Budget';
 import Summary from '../pages/Summary';
 
-const QuestionnaireWrapper = ({ formData, handleChange, handleSubmit, setFormData }) => {
+const QuestionnaireWrapper = ({ formData, handleChange, handleSubmit, setFormData, loading, message }) => {
 
 
     return (
@@ -12,7 +12,7 @@ const QuestionnaireWrapper = ({ formData, handleChange, handleSubmit, setFormDat
             <Route path="/" element={<HairType formData={formData} setFormData={setFormData} handleChange={handleChange} />} />
             <Route path="/lifestyle" element={<Lifestyle formData={formData} setFormData={setFormData} />} />
             <Route path="/budget" element={<Budget formData={formData} setFormData={setFormData} />} />
-            <Route path="/summary" element={<Summary formData={formData} handleSubmit={handleSubmit} />} />
+            <Route path="/summary" element={<Summary formData={formData} handleSubmit={handleSubmit} loading={loading} message={message} />} />
         </Routes>
     );
 
