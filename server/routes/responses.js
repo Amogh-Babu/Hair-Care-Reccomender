@@ -5,7 +5,7 @@ const Response = require('../models/Response')
 router.post('/submit', async (req, res) => {
     try {
         const userInput = { 
-            hair_type: "" + req.body.hairTypeNum + req.body.hairTypeAlpha, // TODO, account for hair type 1
+            hair_type: "" + req.body.hairTypeNum + req.body.hairTypeAlpha,
             density: Number(req.body.density),
             oiliness: Number(req.body.oiliness),
             dandruff: req.body.dandruff,
@@ -27,7 +27,7 @@ router.post('/submit', async (req, res) => {
         });
 
         const recommendation = await recRes.json();
-        console.log("Rec: " + JSON.stringify(recommendation)) // What - come back to here
+        console.log("Rec: " + JSON.stringify(recommendation)) 
         res.json(recommendation)
 
     } catch (err) {

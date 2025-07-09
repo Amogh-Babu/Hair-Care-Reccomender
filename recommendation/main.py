@@ -6,7 +6,7 @@ from rule_based import rule_based_recco
 app = FastAPI()
 
 class UserInput(BaseModel):
-    hairtype: str
+    hair_type: str
     density: int
     oiliness: int
     dandruff: bool
@@ -23,8 +23,8 @@ def get_recommendation(user_input: UserInput):
         from sample_data import all_products
         routines = rule_based_recco(user_input.model_dump(), all_products)
         return {
-            "low-end": routines[1].routine,
-            "high-end": routines[0].routine
+            "low-end": routines[1],
+            "high-end": routines[0]
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
