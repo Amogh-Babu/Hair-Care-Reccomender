@@ -21,10 +21,8 @@ function App() {
   });
 
   const [message, setMessage] = useState('');
-  const [responses, setResponses] = useState([]);
   const [rec, setRec] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [fetchError, setFetchError] = useState(null);
 
   function handleChange(e) {
     const { name, value } = e.target;

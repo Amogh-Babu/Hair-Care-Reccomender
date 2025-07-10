@@ -1,20 +1,5 @@
 from sample_data import user_input, all_products
 
-class Routine:
-    def __init__(self):
-        self.routine = {
-            "Shampoo": {"Used": True, "Name": None },
-            "Conditioner": {"Used": True, "Name": None },
-            "Deep Conditioner": {"Used": False, "Name": None },
-            "Leave-In Conditioner": {"Used": False, "Name": None },
-            "Styling Product": {"Used": False, "Name": None },
-            "Oil/Serum": {"Used": False, "Name": None },
-            "Scalp Treatment": {"Used": False, "Name": None }
-        }
-
-    def setRoutine(self, routine):
-        self.routine = routine
-
 def rule_based_recco(user_input, all_products):
     """
     Args:
@@ -33,7 +18,7 @@ def rule_based_recco(user_input, all_products):
             "Deep Conditioner": {"Used": False, "Name": None },
             "Leave-In Conditioner": {"Used": False, "Name": None },
             "Styling Product": {"Used": False, "Name": None },
-            "Oil/Serum": {"Used": False, "Name": None },
+            "Hair Oil": {"Used": False, "Name": None },
             "Scalp Treatment": {"Used": False, "Name": None }
         }
     low_products = {
@@ -42,7 +27,7 @@ def rule_based_recco(user_input, all_products):
             "Deep Conditioner": {"Used": False, "Name": None },
             "Leave-In Conditioner": {"Used": False, "Name": None },
             "Styling Product": {"Used": False, "Name": None },
-            "Oil/Serum": {"Used": False, "Name": None },
+            "Hair Oil": {"Used": False, "Name": None },
             "Scalp Treatment": {"Used": False, "Name": None }
         }
     included = []
@@ -50,7 +35,7 @@ def rule_based_recco(user_input, all_products):
     
     # Get all products which correspond with user goals and hairtype    
     for product in all_products :
-        if user_input["goals"].intersection(product["goals_treated"]) and user_input["hair_type"] in product["hairtypes"] :
+        if set(user_input["goals"]).intersection(set(product["goals_treated"])) and user_input["hair_type"] in product["hairtypes"] :
             score = abs(product["oiliness"] - user_input["oiliness"])
             score += abs(product["density"] - user_input["density"])
             score += sum(1 for field in ["dandruff", "headcovering", "workout", "heat"] if user_input[field] != product[field])

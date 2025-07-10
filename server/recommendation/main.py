@@ -4,8 +4,12 @@ from typing import List, Set, Tuple, Dict, Any
 from rule_based import rule_based_recco
 from motor.motor_asyncio import AsyncIOMotorClient
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+import os
 
-MONGODBKEY="mongodb+srv://AmoghBabu:AmoghIsAwesome@hair-care-reccomender.at0f6vj.mongodb.net/?retryWrites=true&w=majority&appName=Hair-Care-Reccomender"
+load_dotenv()
+
+MONGODBKEY=os.getenv("MONGODBKEY")
 client = AsyncIOMotorClient(MONGODBKEY)
 
 app = FastAPI()
@@ -17,8 +21,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-db = client["Products"]
-collection = db["product"]
+products_db = client["Products"]
+products_cl = products_db["product"]
+
+responses_db = client["Responses"]
+responses_cl = responses_db["response"]
 
 class UserInput(BaseModel):
     hair_type: str
@@ -28,28 +35,25 @@ class UserInput(BaseModel):
     headcovering: bool
     workout: bool
     heat: bool
-    goals: Set[str]
-    time_range: Tuple[int, int]
-    budget_range: Tuple[int, int]
+    goals: List[str]
+    time_range: List[int]
+    budget_range: List[int]
     
 @app.post("/submit")
 async def get_recommendation(user_input: UserInput):
-    print(user_input)
     try:
+        await responses_cl.insert_one(user_input.model_dump())
     
-        products =  []
-        async for product in collection.find()   :
+        all_products =  []
+        async for product in products_cl.find()   :
             product["_id"] = str(product["_id"])
-            products.append(product) 
+            all_products.append(product) 
         
-        print(products)
-        
-        # routines = rule_based_recco(user_input.model_dump(), all_products)
+        routines = rule_based_recco(user_input.model_dump(), all_products)
 
         return {
-            "Success:" "Yes" 
-            # "low-end": routines[1],
-            # "high-end": routines[0]
+            "low-end": routines[1],
+            "high-end": routines[0]
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
