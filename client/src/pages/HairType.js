@@ -25,14 +25,14 @@ const HairType = ({formData, handleChange, setFormData}) => {
                         </select>
                     </label>
 
-                    {(formData.hairTypeNum === '2' || formData.hairTypeNum === '3' || formData.hairTypeNum === '4') && (
+                    {(formData.hairTypeNum !== '') && (
                     <label  className='question-labels'>
                         Subtype:
                         <select name='hairTypeAlpha' value={formData.hairTypeAlpha} onChange={handleChange}>
                             <option value="">Select</option>
-                            <option value="a">a</option>
-                            <option value="b">b</option>
-                            <option value="c">c</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
                         </select>
                     </label>
                     )}

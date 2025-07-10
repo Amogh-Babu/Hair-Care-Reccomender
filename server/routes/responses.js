@@ -27,52 +27,11 @@ router.post('/submit', async (req, res) => {
         });
 
         const recommendation = await recRes.json();
-        console.log("Rec: " + JSON.stringify(recommendation)) 
         res.json(recommendation)
 
     } catch (err) {
         res.status(500).json({ error: 'Could not save response', details: err});
     }
 });
-
-router.get('/responses', async (req, res) => {
-    try {
-        const responses = await Response.find().sort( {createdAt: -1});
-        res.json(responses);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Failed to fetch responses', details: err})
-    }
-})
-
-router.post('/recommendation', async (req, res) => {
-    try {
-        const userInput = { 
-            hairtype: "" + req.body.hairTypeNum + req.body.hairTypeAlpha,
-            density: req.body.density,
-            oiliness: req.body.oiliness,
-            dandruff: req.body.dandruff,
-            goals: req.body.goals,
-            headcovering: req.body.headcovering,
-            workout: req.body.workout,
-            heat: req.body.heat,
-            time_range: req.body.timeRange,
-            budget_range: req.body.budgRange
-        };
-
-        const recRes = await fetch('http://localhost:8000/recommend', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(userInput)
-        });
-
-        const recommendation = await recRes.json();
-        res.json(recommendation)
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Failed to fetch reccomendation', details: err})
-    }
-})
 
 module.exports = router;

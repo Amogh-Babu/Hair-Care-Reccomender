@@ -10,7 +10,7 @@ const Summary = ({ formData, handleSubmit, loading, message }) => {
 
   const handleNext = (e) => {
     handleSubmit(e);
-    navigate('/reccomendation');
+    navigate('/recommendation/loading');
   }
 
   return (

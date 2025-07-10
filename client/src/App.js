@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import QuestionnaireWrapper from './components/QuestionnaireWrapper';
-import ReccomendationWrapper from './components/ReccomendationWrapper';
+import RecommendationWrapper from './components/RecommendationWrapper';
 
 
 function App() {
@@ -26,50 +26,6 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(null);
 
-  const fetchResponses = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch('http://localhost:4000/api/responses')
-
-      if (!res.ok) {
-        throw new Error('Failed to fetch');
-      }
-
-      const data = await res.json();
-      setResponses(data);
-      setFetchError(null);
-    } catch (err) {
-      setFetchError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchReccomendation = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch('http://localhost:4000/api/recommendation',         
-        { 
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
-
-      if (!res.ok) {
-        throw new Error('Failed to fetch');
-      }
-
-      const data = await res.json();
-      setRec(data);
-      setFetchError(null);
-    } catch (err) {
-      setFetchError(err.message);
-    } finally {
-      setLoading(false);
-      
-    }
-  };
-
   function handleChange(e) {
     const { name, value } = e.target;
     console.log(`Setting form data of ${name} to ${value}`);
@@ -84,11 +40,22 @@ function App() {
     setMessage('Submitting....');
 
     try {
-      const res = await fetch('http://localhost:4000/api/submit',
+      const res = await fetch('http://localhost:8000/submit',
         { 
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
+          body: JSON.stringify({ 
+            hair_type: "" + formData.hairTypeNum + formData.hairTypeAlpha,
+            density: Number(formData.density),
+            oiliness: Number(formData.oiliness),
+            dandruff: formData.dandruff,
+            goals: formData.goals,
+            headcovering: formData.headcovering,
+            workout: formData.workout,
+            heat: formData.heat,
+            time_range: formData.timeRange,
+            budget_range: formData.budgRange
+          })
         }
       );
 
@@ -96,7 +63,9 @@ function App() {
         throw new Error(`Server Error: ${res.statusText}`);
       }
 
-      const rec = await res.json();
+      const newRecommendation = await res.json();
+      setRec(newRecommendation);
+
       setMessage('Submission Success!');
       setFormData({
         hairTypeNum: '',
@@ -129,15 +98,11 @@ function App() {
       loading={loading}
       message={message}
       />}/>
-      <Route path="/reccomendation/*" element={<ReccomendationWrapper
-      fetchReccomendation={fetchReccomendation}
+      <Route path="/recommendation/*" element={<RecommendationWrapper
       setLoading={setLoading}
       loading={loading}
       rec={rec}/>}/>
-      
-
     </Routes>
-    
   );
 }
 
