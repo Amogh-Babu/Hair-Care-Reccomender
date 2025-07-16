@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import '../styles/summary.css';
+import '../../styles/summary.css';
 
 const Summary = ({ formData, handleSubmit, loading, message }) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate('/budget');
+    navigate('/form/budget');
   };
 
   const handleNext = (e) => {

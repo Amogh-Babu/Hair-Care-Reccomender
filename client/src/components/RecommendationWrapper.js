@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
-import Recommendation from '../pages/Recommendation';
-import Loading from '../pages/Loading';
+import Recommendation from '../pages/recommendation/Recommendation';
+import Loading from '../pages/recommendation/Loading';
 
 
 

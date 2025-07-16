@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import QuestionnaireWrapper from './components/QuestionnaireWrapper';
 import RecommendationWrapper from './components/RecommendationWrapper';
+import Hompage from './pages/Hompage';
 
 
 function App() {
@@ -88,7 +89,8 @@ function App() {
 
   return (
     <Routes>
-      <Route path="*" element={<QuestionnaireWrapper 
+      <Route path='/' element={<Hompage/>}></Route>
+      <Route path="/form/*" element={<QuestionnaireWrapper 
       formData={formData} 
       handleChange={handleChange}
       handleSubmit={handleSubmit}

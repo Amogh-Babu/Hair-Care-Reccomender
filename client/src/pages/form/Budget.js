@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
-import '../styles/form.css'
+import '../../styles/form.css'
 
 const Lifestyle = ({ formData, setFormData }) => {
   const navigate = useNavigate();
@@ -54,11 +54,11 @@ const Lifestyle = ({ formData, setFormData }) => {
   }, [setFormData, formData.timeRange, formData.budgRange]);
 
   const handleNext = () => {
-    navigate('/summary');
+    navigate('/form/summary');
   };
 
   const handleBack = () => {
-    navigate('/lifestyle');
+    navigate('/form/lifestyle');
   };
 
   return (

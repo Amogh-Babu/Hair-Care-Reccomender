@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List, Set, Tuple, Dict, Any
 from rule_based import rule_based_recco
@@ -57,3 +58,6 @@ async def get_recommendation(user_input: UserInput):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+app.mount("/static", StaticFiles(directory="static"), name="static")
+

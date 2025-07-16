@@ -1,11 +1,11 @@
-import '../styles/form.css'
+import '../../styles/form.css'
 import { useNavigate } from 'react-router-dom';
 
 const HairType = ({formData, handleChange, setFormData}) => {
     const navigate = useNavigate();
 
     const handleNext = () => {
-        navigate('/lifestyle');
+        navigate('/form/lifestyle');
     }
 
 

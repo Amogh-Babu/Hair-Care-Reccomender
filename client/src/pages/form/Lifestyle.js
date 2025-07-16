@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import '../styles/form.css'
+import '../../styles/form.css'
 
 const Lifestyle = ({formData, setFormData}) => {
     const navigate = useNavigate();
 
     const handleNext = () => {
-        navigate('/budget');
+        navigate('/form/budget');
     }
 
     const handleBack = () => {
-        navigate('/');
+        navigate('/form/hairtype');
     }
 
     const toggleGoal = (goal) => {
