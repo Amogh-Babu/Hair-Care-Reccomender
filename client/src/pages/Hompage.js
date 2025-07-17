@@ -12,22 +12,21 @@ const Hompage = ({}) => {
 
 
   return (
-    <div>
-        <video autoPlay muted loop className="fixed top-0 left-0 w-full h-full object-cover z-[-1]">
-            <source src="http://localhost:8000/static/assets/background_video.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-        </video>
-
-
-        <div className="flex items-center justify-center h-screen w-screen">
-            <div className="bg-white bg-opacity-10 backdrop-blur-md p-8 rounded-xl shadow-lg text-white text-center max-w-sm w-full">
-            <h1 className="text-3xl font-semibold mb-4">Welcome</h1>
-            <p className="mb-6">Find your perfect product match</p>
-            <button onClick={handleStart} className="px-6 py-2 rounded-full bg-white text-black font-semibold hover:bg-opacity-80 transition duration-300">
-                Enter
-            </button>
-            </div>
+    <div class="fixed top-0 left-0 w-screen h-screen bg-cyan-100">
+      <div class="fixed top-[45%] left-[17%] transform -translate-y-1/2 w-96 h-64 bg-neutral-900/40 rounded-xl border-8 border-white shadow-3xl ">
+        <div class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-full">
+            <blockquote class="text-center text-3xl font-semibold text-gray-900 italic dark:text-white font-mono">
+            Your 
+            <span class="relative inline-block before:absolute before:-inset-1 before:block before:-skew-y-3 before:bg-gradient-to-bl from-cyan-300 via-slate-200 to-pink-500 z-0">
+              <span class="relative text-white dark:text-gray-950">personal</span>
+            </span>
+            hair routine.
+          </blockquote>
+          <div class="mx-auto w-fit mt-8">
+            <button class="h-12 w-32 text-lg font-semibold bg-neutral-900/40 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-cyan-300 hover:text-black" onClick={handleStart}>Start</button>
+          </div>
         </div>
+      </div>
     </div>
   );
 };
