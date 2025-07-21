@@ -8,9 +8,8 @@ import Hompage from './pages/Hompage';
 
 function App() {
   const [formData, setFormData] = useState({
-    hairTypeNum: '',
-    hairTypeAlpha: '',
-    density: 1,
+    hairtype: '',
+    thickness: 1,
     oiliness: 1,
     dandruff: false,
     goals: [],
