@@ -10,9 +10,24 @@ const HairType = ({formData, handleChange, setFormData}) => {
         "hairtype": "1A",
         "path": "M100 0 L100 450" 
     })
+    const goalOpts = ["Growth", "Volume/Thickness", "Damage Repair", "Frizz Control", "Curl Definition", "Softness", "filler", "Texture"]
 
     const handleNext = () => {
         navigate('/form/lifestyle');
+    }
+
+    const handleCancel = () => {
+        navigate('/');
+    }
+
+    const toggleGoal = (goal) => {
+        const goals = new Set(formData.goals)
+        if (goals.has(goal)) {
+            goals.delete(goal)
+        } else {
+            goals.add(goal)
+        }
+        setFormData({ ...formData, goals: Array.from(goals)})
     }
 
     const handleHairTypeChange = (e) => {
@@ -47,7 +62,7 @@ const HairType = ({formData, handleChange, setFormData}) => {
                 break 
             case "7":
                 hairtype = "3A"
-                path = "M100 0 C 100 0, 180 50, 100 125 S 20 100, 100 75 S 160 200, 100 250 S 40 225, 100 200 S 160 325, 100 375 S 40 350, 100 325 S 150 400, 100 450"
+                path = "M100 0 C 100 0, 160 50, 100 130 S 40 100, 100 75 S 160 200, 100 250 S 40 225, 100 200 S 160 325, 100 375 S 40 350, 100 325 S 150 400, 100 450"
                 break
             case "8":
                 hairtype = "3B"
@@ -79,86 +94,123 @@ const HairType = ({formData, handleChange, setFormData}) => {
 
 
     return (
-        <div class="fixed top-0 left-0 w-screen h-screen bg-cyan-950">
-            <div class="fixed left-1/2 transform -translate-x-1/2 bg-gray-900/90 h-screen w-[750px] border-l-8 border-r-8 border-white">
-                <p class="text-center mb-8 mt-8 font-mono text-4xl text-white font-bold">Hair Type & Texture.</p>
+
+    <div style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
+      <style>{`
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        .animated-bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(-45deg, #ece99a, #f6f1df, #cbe0ed, #72b7ea, #f6ca97, #ffffff);
+          background-size: 400% 400%;
+          animation: gradientShift 20s ease infinite;
+          z-index: -1;
+          opacity: 0.7;
+        }
+      `}</style>
+
+    <div className="animated-bg" />
+
+            <div class="fixed left-1/2 transform -translate-x-1/2 bg-neutral-900/20 h-screen w-[750px] ">
+
+                <p class="text-center mb-4 mt-8 text-4xl text-white font-semibold font-sans">Hair Type & Goals</p>
                 <div class="grid grid-cols-5 gap-4 h-[600px] p-4">
-                    <div class="col-span-2 bg-slate-300 rounded-md">
+                    <div class="relative col-span-2 bg-slate-300/40 rounded-md">
                         <div class="flex justify-center items-center h-full w-full">
                             <svg width="200" height="450" viewBox="0 0 200 450" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                 d={inputs.path}
-                                stroke="black"
+                                stroke="white"
                                 stroke-width={formData.thickness}
                                 fill="none"
                                 />
                             </svg>
                         </div>
+                        <div class="absolute top-0 left-0 text-white p-2 text-4xl font-semibold">
+                            {inputs.hairtype}
+                        </div>                        
+                    </div>
+                    <div class="col-span-3 bg-slate-600/40 rounded-md p-0 accent-sky-600 text-left text-2xl text-white relative">
+                        <div class="m-4">
+                            <label for="hairtype">Hair Type</label>
+                            <input type="range" id="hairtype" name="hairtype_num" min="1" max="12" value={inputs.hairtype_num} onChange={handleHairTypeChange}/>
 
+                            <label for="thickness">Hair Thickness</label>
+                            <input type="range" id="thickness" name="thickness" min="1" max="10" value={formData.thickness} onChange={handleChange}/>
+                            
+                            <p class="pb-2">Hair Goals</p>
+                            <div  class="grid grid-cols-3 gap-4">
+                                {goalOpts.map((opts) => {return(opts == "filler" ? <div></div> :
+                                    <button class={`h-16 text-md flex items-center justify-center ${formData.goals.includes(opts) ? "bg-sky-600" : "bg-gray-600/50"} 
+                                    transition delay-50 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-sky-600/50 `}
+                                    key={opts} onClick={() => toggleGoal(opts)}>
+                                    {opts == "Volume/Thickness" ? "Volume/ Thickness" : opts}</button>
+                                    )})}
+                            </div>
+                        </div>
+
+                        <div class="absolute bottom-4 w-full flex justify-center">
+                            <span class="pr-3">
+                                <button class="h-12 w-24 text-lg rounded-full font-light font-sans bg-neutral-900/40 transition delay-50 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-[#f0b775] " onClick={handleCancel}>Cancel</button>
+                            </span>
+                            <span>
+                                <button class="h-12 w-24 text-lg rounded-full font-light font-sans bg-neutral-900/40 transition delay-50 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-[#f0b775] " onClick={handleNext}>Next</button>
+                            </span>
+                        </div>
+
+                        {/* <div class="pt-2">
+                            <label class="pr-2" for="dandruff">Dandruff or Scalp Irratitation?</label>
+                            <input type="checkbox" id="dandruff" name="dandruff" checked={formData.dandruff} onChange={(e) => setFormData({ ...formData, dandruff:e.target.checked})}></input>
+                        </div>
+                        <div>
+                            <label class="pr-2" for="headcovering">Head Coverings or Hats?</label>
+                            <input type="checkbox" id="headcovering" name="headcovering" checked={formData.headcovering} onChange={(e) => setFormData({ ...formData, headcovering:e.target.checked})}></input>
+                        </div>
+                        <div>
+                            <label class="pr-2" for="workout">Frequent Workouts?</label>
+                            <input type="checkbox" id="workout" name="workout" checked={formData.workout} onChange={(e) => setFormData({ ...formData, workout:e.target.checked})}></input>
+                        </div>
+                        <div>
+                            <label class="pr-2" for="heat">Frequent Heat Tool Usage?</label>
+                            <input type="checkbox" id="heat" name="heat" checked={formData.heat} onChange={(e) => setFormData({ ...formData, heat:e.target.checked})}></input>
+                        </div> */}
                         
                     </div>
-                    <div class="col-span-3 bg-slate-600 rounded-md p-4">
-                        <p class="text-center mb-4 font-mono text-2xl text-white font-bold">Hair Type:</p>
-                        <input type="range" name="hairtype_num" min="1" max="12" value={inputs.hairtype_num} onChange={handleHairTypeChange}/>
-
-                        <p class="text-center mb-4 font-mono text-2xl text-white font-bold">Hair Thickness:</p>
-                        <input type="range" name="thickness" min="1" max="10" value={formData.thickness} onChange={handleChange}/>
-                    </div>
                 </div>
+                    <div className="flex justify-center space-x-4">
+                        {Array.from({ length: 3 }, (_, i) => (
+                            <div
+                            key={i}
+                            className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${
+                                i + 1 === 1
+                                ? "bg-sky-600 border-sky-600 text-white"
+                                : "border-gray-300 text-gray-500"
+                            }`}
+                            >
+                            {i + 1}
+                            </div>
+                        ))}
+                    </div>
             </div>
-        </div>
-        // <div className="form-container">
-        //     <h2 className='section-title'>Hair Type & Texture</h2>
-        //     <div className='form-questions'>
-        //         <div>
-        //             <label className='question-labels'>
-        //                 What is your natural hair texture?
-        //                 <select name='hairTypeNum' value={formData.hairTypeNum} onChange={handleChange}>
-        //                     <option value="">Select</option>
-        //                     <option value="1">1</option>
-        //                     <option value="2">2</option>
-        //                     <option value="3">3</option>
-        //                     <option value="4">4</option>
-        //                 </select>
-        //             </label>
-
-        //             {(formData.hairTypeNum !== '') && (
-        //             <label  className='question-labels'>
-        //                 Subtype:
-        //                 <select name='hairTypeAlpha' value={formData.hairTypeAlpha} onChange={handleChange}>
-        //                     <option value="">Select</option>
-        //                     <option value="A">A</option>
-        //                     <option value="B">B</option>
-        //                     <option value="C">C</option>
-        //                 </select>
-        //             </label>
-        //             )}
-        //         </div>
-        //         <div className='side-by-side'>
-        //             <label className='question-labels'>
-        //                 How dense is your hair?
-        //                   <input type="range" name="density" min="1" max="10" value={formData.density} onChange={handleChange}/>
-        //                   <span>{formData.density}</span>
-        //             </label>
-        //         </div>
-        //         <div className='side-by-side'> 
-        //             <label className='question-labels'>
-        //                 How oily is your hair/scalp?
-        //                   <input type="range" name="oiliness" min="1" max="10" value={formData.oiliness} onChange={handleChange}/>
-        //                   <span>{formData.oiliness}</span>
-        //             </label>
-        //         </div>
-        //         <div>
-        //             <label>
-        //                 Do you experience dandruff or scalp itchiness?
-        //                 <input type="checkbox" name="dandruff" checked={formData.dandruff} onChange={(e) => setFormData({ ...formData, dandruff:e.target.checked})}></input>
-        //             </label>
-        //         </div>
-        //     </div>
-        //     <button onClick={handleNext}>Next</button>
-
-        // </div>        
+        </div>     
     );
 }
 
 export default HairType;
+
+
+        

@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import QuestionnaireWrapper from './components/QuestionnaireWrapper';
 import RecommendationWrapper from './components/RecommendationWrapper';
 import Hompage from './pages/Hompage';
+import Test from './pages/test'
 
 
 function App() {
